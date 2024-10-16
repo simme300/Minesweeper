@@ -1,0 +1,145 @@
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--beginner: 9;
+	--intermediate: 16;
+	--expert: 30;
+}
+
+body {
+	margin: 10vh 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: hsl(0, 0%, 25%);
+}
+
+.header {
+	font-family: 'Orbitron', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 900;
+	font-style: normal;
+	color: white;
+}
+
+.difficulty-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 400px;
+	margin-top: 5vh;
+	color: white;
+}
+
+.difficulty {
+	font-family: 'Gruppo', sans-serif;
+	font-optical-sizing: auto;
+	color: white;
+	font-size: 1.4rem;
+}
+
+.difficulty:hover {
+	color: hsl(239, 74%, 66%);
+}
+
+.board-container {
+	position: relative;
+	display: grid;
+	width: 500px;
+	margin-top: 2vh;
+	margin-bottom: 5vh;
+	grid-template-areas:
+		'game-info'
+		'tiles';
+	grid-template-columns: 1fr;
+	grid-template-rows: 100px 400px;
+	border: 5px solid black;
+	background-color: hsl(0, 0%, 75%);
+}
+
+.game-state-information {
+	position: relative;
+	display: grid;
+	align-items: center;
+	text-align: center;
+	grid-area: game-info;
+	grid-template-areas: 'mines button timer';
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: repeat(3, 100px);
+	border: 3px solid black;
+}
+
+.game-state-information > * {
+	font-size: 2rem;
+	color: red;
+}
+
+.mine-counter {
+	grid-area: mines;
+	border: 1px solid black;
+	margin: 0.3rem;
+	padding: 0.8rem;
+}
+
+.button-wrapper {
+	position: relative;
+	display: flex;
+	grid-area: button;
+	justify-content: center;
+	align-items: center;
+}
+
+.win-lose-button {
+	outline: none;
+	background-color: transparent;
+	padding: 0.8rem;
+	font-size: 2rem;
+	border: 1px solid black;
+	color: yellow;
+}
+
+.timer {
+	grid-area: timer;
+	border: 1px solid black;
+	padding: 0.8rem;
+	margin-right: 0.3rem;
+}
+
+.board {
+	position: relative;
+	display: grid;
+	grid-area: tiles;
+	grid-template-columns: repeat(var(--beginner), minmax(30px, 1fr));
+	grid-template-rows: repeat(var(--beginner), minmax(auto, 1fr));
+}
+
+.tile {
+	background-color: hsl(0, 0%, 75%);
+	outline: none;
+	border: 2px solid black;
+}
+
+.tile:hover {
+	background-color: hsl(0, 0%, 90%);
+}
+
+.flagged {
+	background-color: yellow;
+}
+
+.hidden {
+	background-color: hsl(0, 0%, 75%);
+}
+
+.mine {
+	background-color: red;
+}
+
+.tile[data-status='marked'] {
+	background-color: yellow;
+}
