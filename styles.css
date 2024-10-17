@@ -3,9 +3,8 @@
 }
 
 :root {
-	--beginner: 9;
-	--intermediate: 16;
-	--expert: 30;
+	--rows: '';
+	--cols: '';
 }
 
 body {
@@ -50,7 +49,7 @@ body {
 .board-container {
 	position: relative;
 	display: grid;
-	width: 500px;
+	max-width: 950px;
 	margin-top: 2vh;
 	margin-bottom: 5vh;
 	grid-template-areas:
@@ -114,8 +113,8 @@ body {
 	position: relative;
 	display: grid;
 	grid-area: tiles;
-	grid-template-columns: repeat(var(--beginner), minmax(30px, 1fr));
-	grid-template-rows: repeat(var(--beginner), minmax(auto, 1fr));
+	grid-template-columns: repeat(var(--cols), minmax(30px, 1fr));
+	grid-template-rows: repeat(var(--rows), minmax(auto, 1fr));
 	justify-content: center;
 }
 
