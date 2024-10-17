@@ -116,6 +116,7 @@ body {
 	grid-area: tiles;
 	grid-template-columns: repeat(var(--beginner), minmax(30px, 1fr));
 	grid-template-rows: repeat(var(--beginner), minmax(auto, 1fr));
+	justify-content: center;
 }
 
 .tile {
@@ -128,18 +129,18 @@ body {
 	background-color: hsl(0, 0%, 90%);
 }
 
-.flagged {
+.tile[data-status='flagged'][data-revealed='false'] {
 	background-color: yellow;
 }
 
-.hidden {
-	background-color: hsl(0, 0%, 75%);
+.tile[data-status='opened'][data-revealed='true'] {
+	background-color: hsl(0, 0%, 55%);
 }
 
-.mine {
+.tile[data-status='mine'][data-revealed='true'] {
 	background-color: red;
 }
 
-.tile[data-status='marked'] {
-	background-color: yellow;
+.tile[data-revealed='false'] {
+	background-color: transparent;
 }
