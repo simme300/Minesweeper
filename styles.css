@@ -137,6 +137,10 @@ body {
 	background-color: hsl(0, 0%, 55%);
 }
 
+.tile[data-status='empty'][data-revealed='true'] {
+	background-color: hsl(0, 0%, 55%);
+}
+
 .tile[data-status='mine'][data-revealed='true'] {
 	background-color: red;
 }
