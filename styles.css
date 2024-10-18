@@ -124,7 +124,10 @@ body {
 	border: 2px solid black;
 }
 
-.tile:hover {
+/* .tile:hover {
+	background-color: hsl(0, 0%, 90%);
+} */
+.tile[data-revealed='false']:hover {
 	background-color: hsl(0, 0%, 90%);
 }
 
@@ -140,10 +143,35 @@ body {
 	background-color: hsl(0, 0%, 55%);
 }
 
-.tile[data-status='mine'][data-revealed='true'] {
+.tile[data-mine='true'][data-revealed='true'] {
 	background-color: red;
 }
 
 .tile[data-revealed='false'] {
 	background-color: transparent;
 }
+/* 
+.tile[data-number='1'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='2'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='3'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='4'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='5'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='6'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='7'][data-revealed='true'] {
+	background-color: ;
+}
+.tile[data-number='8'][data-revealed='true'] {
+	background-color: ;
+} */
