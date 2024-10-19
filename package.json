@@ -1,17 +1,16 @@
 {
-  "name": "minesweeper-project",
-  "version": "1.0.0",
-  "main": "script.js",
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "lodash": "^4.17.21",
-    "parcel-bundler": "^1.12.5"
-  }
+	"name": "minesweeper-project",
+	"version": "1.0.0",
+	"scripts": {
+		"start": "parcel index.html",
+		"build": "parcel build index.html"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"lodash": "^4.17.21",
+		"parcel": "^2.12.0"
+	}
 }

@@ -3,8 +3,10 @@
 }
 
 :root {
-	--rows: '';
-	--cols: '';
+	--rows: 9;
+	--cols: 9;
+	--revealed-tile-background-color: hsl(0, 0%, 45%);
+	--revealed-font-size: 1.2rem;
 }
 
 body {
@@ -124,23 +126,12 @@ body {
 	border: 2px solid black;
 }
 
-/* .tile:hover {
-	background-color: hsl(0, 0%, 90%);
-} */
-.tile[data-revealed='false']:hover {
-	background-color: hsl(0, 0%, 90%);
-}
-
 .tile[data-status='flagged'][data-revealed='false'] {
 	background-color: yellow;
 }
 
-.tile[data-status='opened'][data-revealed='true'] {
-	background-color: hsl(0, 0%, 55%);
-}
-
 .tile[data-status='empty'][data-revealed='true'] {
-	background-color: hsl(0, 0%, 55%);
+	background-color: var(--revealed-tile-background-color);
 }
 
 .tile[data-mine='true'][data-revealed='true'] {
@@ -150,28 +141,45 @@ body {
 .tile[data-revealed='false'] {
 	background-color: transparent;
 }
-/* 
+
 .tile[data-number='1'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: lightblue;
 }
 .tile[data-number='2'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: greenyellow;
 }
 .tile[data-number='3'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: red;
 }
 .tile[data-number='4'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: purple;
 }
+
 .tile[data-number='5'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: blue;
 }
 .tile[data-number='6'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: orange;
 }
 .tile[data-number='7'][data-revealed='true'] {
-	background-color: ;
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: whitesmoke;
 }
 .tile[data-number='8'][data-revealed='true'] {
-	background-color: ;
-} */
+	background-color: var(--revealed-tile-background-color);
+	font-size: var(--revealed-font-size);
+	color: salmon;
+}
