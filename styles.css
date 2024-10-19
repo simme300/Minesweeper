@@ -142,6 +142,14 @@ body {
 	background-color: transparent;
 }
 
+.tile[data-neighbour='true'][data-revealed='false'] {
+	background-color: var(--revealed-tile-background-color);
+}
+
+.tile[data-neighbour='false'][data-revealed='false'] {
+	background-color: hsl(0, 0%, 75%);
+}
+
 .tile[data-number='1'][data-revealed='true'] {
 	background-color: var(--revealed-tile-background-color);
 	font-size: var(--revealed-font-size);

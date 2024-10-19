@@ -43,7 +43,7 @@ export function createTwoDArray(rows = 9, cols = 9) {
 export function placeMines(numMines, boardsize, arr) {
 	const mineSet = new Set();
 	while (mineSet.size < numMines) {
-		const mine = randomNumberGenerator(0, boardsize);
+		const mine = randomNumberGenerator(0, boardsize - 1);
 		mineSet.add(mine);
 	}
 	mineSet.forEach((mine) => {
