@@ -120,6 +120,23 @@ body {
 	justify-content: center;
 }
 
+.game-over {
+	cursor: not-allowed;
+	pointer-events: none;
+	animation-name: color-change;
+	animation-delay: 0.5s;
+	animation-direction: forwards;
+	animation-iteration-count: 1;
+	animation-duration: 5s;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+@keyframes color-change {
+	100% {
+		background-color: hsl(0, 0%, 15%);
+	}
+}
+
 .tile {
 	background-color: hsl(0, 0%, 75%);
 	outline: none;

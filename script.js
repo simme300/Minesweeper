@@ -1,25 +1,16 @@
-import { createBoard } from './board';
+import { createBoard, calculateIndex } from './board';
 let { board, rows, columns, boardsize, mines } = createBoard();
 
 document.addEventListener('click', (e) => {
 	if (!e.target.closest('.tile')) return;
-	const tile = e.target;
-
-	if (tile.dataset.mine === 'true') {
-		tile.dataset.revealed = 'true';
-	} else if (Number(tile.dataset.number) > 0) {
-		tile.dataset.revealed = 'true';
-		tile.textContent = tile.dataset.number;
-	} else if (tile.dataset.status === 'empty') {
-		const num = Number(tile.dataset.index);
-		const [row, col] = calculateIndex(num, columns);
-		revealEmptyTiles(board, row, col);
-	}
+	playerClick(e.target);
+	winningGameState(board, rows, columns);
 });
 
 document.addEventListener('contextmenu', (e) => {
 	if (!e.target.closest('.tile')) return;
-	flagTile(e.target);
+	flagtarget(e.target);
+	winningGameState(board, rows, columns);
 	e.preventDefault();
 });
 
@@ -29,31 +20,14 @@ document.addEventListener('click', (e) => {
 	board = createBoard(difficultyLevel);
 });
 
-function flagTile(target) {
-	const numberOfMines = document.querySelector('.mine-counter');
-	let count = Number(numberOfMines.textContent);
-	if (target.dataset.status === 'flagged') {
-		target.dataset.status = '';
-		count += 1;
-		numberOfMines.textContent = count;
-	} else {
-		target.dataset.status = 'flagged';
-		count -= 1;
-		numberOfMines.textContent = count;
-	}
-}
-
-document.addEventListener('click', (e) => {
-	if (!e.target.closest('.win-lose-button')) return;
-	window.location.reload();
-});
-
 document.addEventListener('mousedown', (e) => {
 	if (!e.target.closest('.tile')) return;
-	if (Number(e.target.dataset.number) > 0) {
-		const num = Number(e.target.dataset.index);
-		const [row, col] = calculateIndex(num, columns);
-		displayNeighbours(board, row, col);
+	if (e.target.dataset.revealed === 'true') {
+		if (Number(e.target.dataset.number) > 0) {
+			const num = Number(e.target.dataset.index);
+			const [row, col] = calculateIndex(num, columns);
+			displayNeighbours(board, row, col);
+		}
 	}
 });
 
@@ -66,13 +40,12 @@ document.addEventListener('mouseup', (e) => {
 	}
 });
 
-function calculateIndex(index, columns) {
-	const row = Math.floor(index / columns);
-	const col = index % columns;
-	return [row, col];
-}
+document.addEventListener('click', (e) => {
+	if (!e.target.closest('.win-lose-button')) return;
+	window.location.reload();
+});
 
-function revealEmptyTiles(board, row, col) {
+function revealEmptytargets(board, row, col) {
 	if (
 		!board?.[row]?.[col] ||
 		board[row][col].dataset.revealed === 'true' ||
@@ -95,7 +68,7 @@ function revealEmptyTiles(board, row, col) {
 	for (let i = row - 1; i <= row + 1; i++) {
 		for (let j = col - 1; j <= col + 1; j++) {
 			if (i === row && j === col) continue;
-			revealEmptyTiles(board, i, j);
+			revealEmptytargets(board, i, j);
 		}
 	}
 }
@@ -103,7 +76,7 @@ function revealEmptyTiles(board, row, col) {
 function displayNeighbours(board, row, col) {
 	for (let i = row - 1; i <= row + 1; i++) {
 		for (let j = col - 1; j <= col + 1; j++) {
-			if (board?.[i]?.[j].dataset.revealed === 'false') {
+			if (board?.[i]?.[j]?.dataset.revealed === 'false') {
 				board[i][j].dataset.neighbour = 'true';
 			}
 		}
@@ -113,9 +86,82 @@ function displayNeighbours(board, row, col) {
 function hideNeighbours(board, row, col) {
 	for (let i = row - 1; i <= row + 1; i++) {
 		for (let j = col - 1; j <= col + 1; j++) {
-			if (board?.[i]?.[j].dataset.revealed === 'false') {
-				board[i][j].dataset.neighbour = 'false';
+			if (board?.[i]?.[j]?.dataset.neighbour === 'true') {
+				delete board[i][j].dataset.neighbour;
 			}
 		}
 	}
 }
+
+function playerClick(target) {
+	if (target.dataset.mine === 'true') {
+		target.dataset.revealed = 'true';
+		gameOver(board, rows, columns);
+	} else if (Number(target.dataset.number) > 0) {
+		target.dataset.revealed = 'true';
+		target.textContent = target.dataset.number;
+	} else if (target.dataset.status === 'empty') {
+		const num = Number(target.dataset.index);
+		const [row, col] = calculateIndex(num, columns);
+		revealEmptytargets(board, row, col);
+	}
+}
+
+function flagtarget(target) {
+	const numberOfMines = document.querySelector('.mine-counter');
+	let count = Number(numberOfMines.textContent);
+	if (target.dataset.status === 'flagged') {
+		target.dataset.status = 'empty';
+		count += 1;
+		numberOfMines.textContent = count;
+	} else {
+		target.dataset.status = 'flagged';
+		count -= 1;
+		numberOfMines.textContent = count;
+	}
+}
+
+function gameOver(board, r, c) {
+	for (let row = 0; row < r; row++) {
+		for (let col = 0; col < c; col++) {
+			if (board[row][col].dataset.mine === 'true')
+				board[row][col].dataset.revealed = 'true';
+		}
+	}
+	const allTiles = document.querySelectorAll('.tile');
+	allTiles.forEach((tile) => {
+		if (tile.dataset.mine !== 'true') {
+			tile.classList.add('game-over');
+		}
+	});
+}
+
+function winningGameState(board, r, c) {
+	let flaggedTiles = 0;
+	let revealedTiles = 0;
+
+	for (let row = 0; row < r; row++) {
+		for (let col = 0; col < c; col++) {
+			if (
+				board[row][col].dataset.revealed === 'false' &&
+				board[row][col].dataset.status === 'flagged' &&
+				board[row][col].dataset.mine === 'true'
+			) {
+				flaggedTiles++;
+			}
+			if (board[row][col].dataset.revealed === 'true') {
+				revealedTiles++;
+			}
+		}
+	}
+	if (flaggedTiles === mines && revealedTiles === boardsize - flaggedTiles) {
+		console.log('YOU WON');
+	}
+}
+
+// TODO
+// Implement timer
+// finish logic and styling for a winning board / losing
+// adjust resett button text or styles
+// fix minor issue bugs
+// refactor

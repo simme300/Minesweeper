@@ -82,3 +82,9 @@ export function randomNumberGenerator(min, max) {
 	const maxFloored = Math.floor(max);
 	return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
+
+export function calculateIndex(index, columns) {
+	const row = Math.floor(index / columns);
+	const col = index % columns;
+	return [row, col];
+}
