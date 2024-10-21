@@ -83,7 +83,10 @@ function revealEmptyTiles(board, row, col) {
 function displayNeighbours(board, row, col) {
 	for (let i = row - 1; i <= row + 1; i++) {
 		for (let j = col - 1; j <= col + 1; j++) {
-			if (board?.[i]?.[j]?.dataset.revealed === 'false') {
+			if (
+				board?.[i]?.[j]?.dataset.revealed === 'false' &&
+				board?.[i]?.[j]?.dataset.status !== 'flagged'
+			) {
 				board[i][j].dataset.neighbour = 'true';
 			}
 		}
