@@ -136,11 +136,14 @@ function gameOver(board, r, c) {
 		}
 	}
 	const allTiles = document.querySelectorAll('.tile');
+	const reloadBtn = document.querySelector('.reload-button');
 	allTiles.forEach((tile) => {
 		if (tile.dataset.mine !== 'true') {
 			tile.classList.add('game-over');
+			reloadBtn.innerHTML = '&#9760';
 		}
 	});
+
 	if (isRunning) {
 		clearInterval(timer);
 	}
@@ -165,13 +168,15 @@ function winningGameState(board, r, c) {
 		}
 	}
 	if (flaggedTiles === mines && revealedTiles === boardsize - flaggedTiles) {
-		console.log('YOU WON');
+		const reloadBtn = document.querySelector('.reload-button');
+		reloadBtn.innerHTML = '&#128512';
+		if (isRunning) {
+			clearInterval(timer);
+		}
 	}
 }
 
 // TODO
-// Implement timer
 // finish logic and styling for a winning board / losing
-// adjust resett button text or styles
 // fix minor issue bugs
 // refactor
