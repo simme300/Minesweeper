@@ -1,15 +1,22 @@
 import { createBoard, calculateIndex } from './board';
+import { timerFunction } from './timer';
 let { board, rows, columns, boardsize, mines } = createBoard();
+let timer = null;
+let isRunning = false;
 
 document.addEventListener('click', (e) => {
 	if (!e.target.closest('.tile')) return;
 	playerClick(e.target);
+	if (!isRunning) {
+		timer = timerFunction();
+		isRunning = true;
+	}
 	winningGameState(board, rows, columns);
 });
 
 document.addEventListener('contextmenu', (e) => {
 	if (!e.target.closest('.tile')) return;
-	flagtarget(e.target);
+	flagTile(e.target);
 	winningGameState(board, rows, columns);
 	e.preventDefault();
 });
@@ -41,11 +48,11 @@ document.addEventListener('mouseup', (e) => {
 });
 
 document.addEventListener('click', (e) => {
-	if (!e.target.closest('.win-lose-button')) return;
+	if (!e.target.closest('.reload-button')) return;
 	window.location.reload();
 });
 
-function revealEmptytargets(board, row, col) {
+function revealEmptyTiles(board, row, col) {
 	if (
 		!board?.[row]?.[col] ||
 		board[row][col].dataset.revealed === 'true' ||
@@ -68,7 +75,7 @@ function revealEmptytargets(board, row, col) {
 	for (let i = row - 1; i <= row + 1; i++) {
 		for (let j = col - 1; j <= col + 1; j++) {
 			if (i === row && j === col) continue;
-			revealEmptytargets(board, i, j);
+			revealEmptyTiles(board, i, j);
 		}
 	}
 }
@@ -103,11 +110,11 @@ function playerClick(target) {
 	} else if (target.dataset.status === 'empty') {
 		const num = Number(target.dataset.index);
 		const [row, col] = calculateIndex(num, columns);
-		revealEmptytargets(board, row, col);
+		revealEmptyTiles(board, row, col);
 	}
 }
 
-function flagtarget(target) {
+function flagTile(target) {
 	const numberOfMines = document.querySelector('.mine-counter');
 	let count = Number(numberOfMines.textContent);
 	if (target.dataset.status === 'flagged') {
@@ -134,6 +141,9 @@ function gameOver(board, r, c) {
 			tile.classList.add('game-over');
 		}
 	});
+	if (isRunning) {
+		clearInterval(timer);
+	}
 }
 
 function winningGameState(board, r, c) {
